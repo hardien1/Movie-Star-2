@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hollywood Ascent</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@^0.12.0"
+        }
+      }
+    </script>
+    <script type="module" src="index.tsx"></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="creation-screen" style="display: none;">
+        <div class="creation-container">
+            <h1 id="creation-title">Create Your Star</h1>
+
+            <div id="creation-steps">
+                <div class="step-indicator active" data-step="1">Identity</div>
+                <div class="step-indicator" data-step="2">Appearance</div>
+                <div class="step-indicator" data-step="3">Backstory</div>
+                <div class="step-indicator" data-step="4">Summary</div>
+            </div>
+
+            <div class="creation-content">
+                <!-- Step 1: Identity -->
+                <div class="creation-step active" id="step-1">
+                    <div class="creation-card">
+                        <h3>Identity</h3>
+                        <div class="form-group">
+                            <label for="player-name">Name</label>
+                            <input type="text" id="player-name" placeholder="Enter your name...">
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="choice-group" id="gender-choices">
+                                <!-- JS will populate this -->
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="birthplace-select">Birthplace</label>
+                            <select id="birthplace-select">
+                                <!-- JS will populate this -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Appearance -->
+                <div class="creation-step" id="step-2">
+                    <div class="appearance-grid">
+                        <div id="avatar-preview">
+                            <!-- Avatar SVG will be dynamically inserted here by JS -->
+                        </div>
+                        <div class="appearance-controls">
+                             <div class="form-group">
+                                <label>Hair Style</label>
+                                <div class="choice-group" id="hairstyle-choices"></div>
+                             </div>
+                             <div class="form-group">
+                                <label>Hair Color</label>
+                                <div class="color-swatches" id="hair-color-swatches"></div>
+                             </div>
+                              <div class="form-group">
+                                <label>Skin Tone</label>
+                                <div class="color-swatches" id="skin-tone-swatches"></div>
+                             </div>
+                             <div class="form-group">
+                                <label>Clothing Color</label>
+                                <div class="color-swatches" id="clothing-color-swatches"></div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Backstory -->
+                <div class="creation-step" id="step-3">
+                    <div class="creation-card">
+                        <h3>Background</h3>
+                        <p class="card-subtitle">Choose your origin story. This will affect your starting stats.</p>
+                        <div class="choice-group vertical" id="background-choices">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Summary -->
+                <div class="creation-step" id="step-4">
+                    <div class="creation-card">
+                        <h3>Summary</h3>
+                        <div id="summary-details">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                     <div class="creation-card stats-preview-card">
+                        <h3>Starting Stats</h3>
+                        <div id="stats-preview">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="creation-actions">
+                <button id="creation-back-btn" class="secondary-btn" style="display: none;">Back</button>
+                <button id="randomize-btn">Randomize</button>
+                <button id="creation-next-btn">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-container">
+        <header id="stats-header">
+            <!-- New stats bar with icons and progress bars will be rendered here by JS -->
+        </header>
+
+        <main id="main-content">
+            <div id="dashboard-view" class="view active">
+                <!-- Dashboard content (tabs, feed, schedule) will be rendered here by JS -->
+            </div>
+            <div id="career-view" class="view">
+                <h2>Career</h2>
+                <div id="career-actions"></div>
+            </div>
+            <div id="wealth-view" class="view">
+                <h2>Wealth & Investments</h2>
+                <div id="wealth-actions"></div>
+            </div>
+            <div id="activities-view" class="view">
+                <h2>Activities</h2>
+                <div id="activities-container"></div>
+            </div>
+             <div id="social-view" class="view">
+                <h2>HGram</h2>
+                <div id="social-actions"></div>
+            </div>
+            <div id="relationships-view" class="view">
+                <h2>Relationships</h2>
+                <div id="relationships-actions"></div>
+            </div>
+            <div id="hstardb-view" class="view">
+                <!-- HStarDB content will be rendered here by JS -->
+            </div>
+            <div id="profile-view" class="view">
+                 <div class="profile-header">
+                    <div class="profile-banner"></div>
+                    <div class="profile-picture"></div>
+                </div>
+                <div class="profile-info">
+                    <div id="profile-stats-display">
+                        <!-- Detailed stats will be rendered here -->
+                    </div>
+                </div>
+                <div id="profile-achievements">
+                    <!-- Achievements will be rendered here -->
+                </div>
+                <div id="profile-upcoming-events">
+                    <!-- Upcoming award ceremonies will be rendered here -->
+                </div>
+                <div id="profile-awards-recognition">
+                    <!-- Awards and recognition card will be rendered here -->
+                </div>
+                <div id="profile-filmography">
+                    <!-- Filmography will be rendered here -->
+                </div>
+                <div id="profile-customization">
+                    <!-- Appearance options rendered here -->
+                </div>
+
+                <details class="collapsible-section" id="charts-container">
+                    <summary>Progress Overview</summary>
+                     <div class="chart-container">
+                        <canvas id="player-stats-chart"></canvas>
+                    </div>
+                    <h3 style="margin-top: 2rem;">Wealth Growth</h3>
+                    <div class="chart-container">
+                         <canvas id="wealth-chart"></canvas>
+                    </div>
+                </details>
+            </div>
+        </main>
+        
+        <div id="action-bar">
+            <button id="advance-week-btn">Continue Week</button>
+        </div>
+
+        <nav id="bottom-nav">
+             <button data-view="dashboard-view" class="active">📅<span class="nav-label">Dashboard</span></button>
+             <button data-view="career-view">🎬<span class="nav-label">Career</span></button>
+             <button data-view="activities-view">🏃‍♂️<span class="nav-label">Activities</span></button>
+             <button data-view="social-view">👥<span class="nav-label">HGram</span></button>
+             <button data-view="relationships-view">❤️<span class="nav-label">Relationships</span></button>
+             <button data-view="wealth-view">🏦<span class="nav-label">Wealth</span></button>
+             <button data-view="hstardb-view">⭐<span class="nav-label">HStarDB</span></button>
+             <button data-view="profile-view">👤<span class="nav-label">Profile</span></button>
+        </nav>
+    </div>
+
+    <div id="modal-backdrop" class="hidden">
+        <div id="modal-content">
+            <div id="modal-icon"></div>
+            <h3 id="modal-title">A special event occurred!</h3>
+            <p id="modal-text"></p>
+            <div id="modal-choices"></div>
+        </div>
+    </div>
+
+    <div id="feedback-container"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
